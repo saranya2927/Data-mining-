@@ -1,0 +1,40 @@
+import pandas as pd
+
+# -------------------------
+# Step 1: Create Sample Data (instead of reading file)
+# -------------------------
+data = pd.DataFrame({
+    'Name': ['A', 'B', 'C', 'D', 'A'],
+    'Age': [23, 25, None, 29, 23],
+    'Salary': [50000, 60000, 55000, None, 50000]
+})
+
+print("Original Data:\n", data)
+
+# -------------------------
+# Step 2: Transform
+# -------------------------
+
+# Fill missing values
+data['Age'].fillna(data['Age'].mean(), inplace=True)
+data['Salary'].fillna(data['Salary'].mean(), inplace=True)
+
+# Remove duplicates
+data.drop_duplicates(inplace=True)
+
+# Convert column names to lowercase
+data.columns = data.columns.str.lower()
+
+# Add new column
+data['salary_bonus'] = data['salary'] * 1.10
+
+print("\nTransformed Data:\n", data)
+
+# -------------------------
+# Step 3: Load
+# -------------------------
+
+# Save to CSV
+data.to_csv("output_data.csv", index=False)
+
+print("\nData successfully saved to output_data.csv")
